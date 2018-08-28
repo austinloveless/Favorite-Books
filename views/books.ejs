@@ -1,0 +1,17 @@
+<% include ./partials/header %>
+<br>
+<br>
+<br>
+  <% books_authors.forEach(book => {%>
+    <%=book.title%>
+    <br>
+    <br>
+    <%=book.first_name%> -<%=book.last_name%>
+    <br>
+    <br>
+    <%=book.genre%>
+    <img src="<%=book.cover_url%>" alt="book image">
+    <%=book.description%>
+  <%})%>
+
+<% include ./partials/footer %>

@@ -1,0 +1,15 @@
+<% include ./partials/header %>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form action="/api/books" method="POST">
+        <input type="text" name="book[title]" placeholder="Title">
+        <input type="text" name="book[genre]" placeholder="Genre">
+        <!-- <input type="text" name="book[cover_url]" placeholder="Photo"> -->
+        <input type="text" name="book[description]" placeholder="Description">
+        <input type="submit">
+    </form>
+    <%=authors%>
+
+    <% include ./partials/footer %>

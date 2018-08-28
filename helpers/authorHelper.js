@@ -1,7 +1,9 @@
 const queries = require("../queries");
 
 exports.getAuthors = function(req, res) {
-  queries.listAuthors().then(authors => res.json({ authors }));
+  queries
+    .listAuthors()
+    .then(authors => res.render("index", { authors: authors }));
 };
 
 exports.createAuthors = function(req, res) {

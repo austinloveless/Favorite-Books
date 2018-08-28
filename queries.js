@@ -58,5 +58,63 @@ module.exports = {
     return database("authors")
       .delete()
       .where("id", id);
+  },
+
+  //list all books_authors
+  listBooksAuthors() {
+    return database("books_authors")
+      .join("books", "books_authors.books_id", "=", "books.id")
+      .join("authors", "books_authors.authors_id", "=", "authors.id")
+      .select({
+        book_id: "books.id",
+        title: "books.book_title",
+        first_name: "authors.first_name",
+        last_name: "authors.last_name",
+        author_image: "authors.portrait_url",
+        author_bio: "authors.biography",
+        genre: "books.book_genre",
+        description: "book_description",
+        cover_url: "books.book_cover_url"
+      });
+  },
+  readBooksAndAuthors(id) {
+    return database("books_authors")
+      .join("books", "books_authors.books_id", "=", "books.id")
+      .join("authors", "books_authors.authors_id", "=", "authors.id")
+      .select({
+        book_id: "books.id",
+        title: "books.book_title",
+        first_name: "authors.first_name",
+        last_name: "authors.last_name",
+        author_image: "authors.portrait_url",
+        author_bio: "authors.biography",
+        genre: "books.book_genre",
+        description: "book_description",
+        cover_url: "books.book_cover_url"
+      })
+      .where("books_authors.books_id", id)
+      .first();
+  },
+
+  postBooks(authorId, book) {
+    if (!Number.isInteger(authorId)) {
+      throw new Error("Invalid authorId.");
+    }
+    if (typeof book !== "object") {
+      throw new Error("Invalid book. Object required.");
+    }
+
+    return database("books")
+      .insert(book)
+      .returning("*")
+      .then(record => record[0])
+      .then(newBook => {
+        // authorId & newBook.id
+        console.log("newbook", newBook);
+        return database("books_authors").insert({
+          authors_id: authorId,
+          books_id: newBook.id
+        });
+      });
   }
 };

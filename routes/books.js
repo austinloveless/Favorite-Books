@@ -1,15 +1,18 @@
 var express = require("express");
 var router = express.Router();
 var helpers = require("../helpers/bookHelper");
+var joinHelpers = require("../helpers/booksAuthorsHelpers");
 
 router
   .route("/")
-  .get(helpers.getBooks)
-  .post(helpers.createBooks);
+  .get(joinHelpers.listBooksShow)
+  .post(joinHelpers.postBook);
+
+router.route("/new").get(helpers.showNew);
 
 router
   .route("/:bookId")
-  .get(helpers.getBook)
+  .get(joinHelpers.listOneBook)
   .put(helpers.updateBook)
   .delete(helpers.deleteBook);
 

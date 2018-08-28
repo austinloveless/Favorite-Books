@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authorRoutes = require("./routes/authors");
 const booksRoutes = require("./routes/books");
+const indexRoutes = require("./routes/index");
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,6 +18,7 @@ app.set("view engine", "ejs");
 
 app.use("/api/authors", authorRoutes);
 app.use("/api/books", booksRoutes);
+app.use("/index", indexRoutes);
 
 app.listen(port, () => {
   console.log("listening on port", port);
